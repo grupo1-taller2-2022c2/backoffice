@@ -8,3 +8,8 @@ class AdminSchema(BaseModel):
 
     class Config:
         orm_mode = True
+
+
+class AdminSignInSchema(BaseModel):
+    email: EmailStr
+    password: str
