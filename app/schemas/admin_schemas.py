@@ -13,3 +13,10 @@ class AdminSchema(BaseModel):
 class AdminSignInSchema(BaseModel):
     email: EmailStr
     password: str
+
+
+class AdminSignUpSchema(BaseModel):
+    email: EmailStr
+    password: str
+    username: str
+    surname: str

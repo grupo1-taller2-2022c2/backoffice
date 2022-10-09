@@ -12,3 +12,19 @@ def get_admins_from_db(db: Session):
 
 def get_admin_by_email(admin_email: EmailStr, db: Session):
     return db.query(admin_models.Admin).filter(admin_models.Admin.email == admin_email).first()
+
+
+def register_admin(admin: admin_schemas.AdminSignUpSchema, db: Session):
+    db_admin = admin_models.Admin(
+        email=admin.email,
+        password=hash_password(admin.password),
+        username=admin.username,
+        surname=admin.surname,
+    )
+    try:
+        db.add(db_admin)
+        db.commit()
+        db.refresh(db_admin)
+        return admin_schemas.AdminSchema.from_orm(db_admin)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail="Internal server error")
