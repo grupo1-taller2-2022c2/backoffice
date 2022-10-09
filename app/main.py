@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from app.routes import admin_routes
+from app.routes import admin_routes, users_admin_routes
 
 app = FastAPI()
 
@@ -20,4 +20,6 @@ def read_root():
     return {"Welocme to": "Backoffice microservice"}
 
 
-app.include_router(admin_routes.router, prefix="/admins", tags=["admins"])
+app.include_router(admin_routes.router, prefix="/admins", tags=["Admins CRUD"])
+app.include_router(users_admin_routes.router,
+                   prefix="/users", tags=["User Adrministration"])
