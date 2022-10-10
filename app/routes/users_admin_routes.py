@@ -43,7 +43,7 @@ def get_driver_profile(user_email: EmailStr):
                         detail=response.json()['detail'])
 
 
-@router.get("/users/blocked/{user_email}", status_code=status.HTTP_200_OK)
+@router.post("/blocked/{user_email}", status_code=status.HTTP_200_OK)
 def block_user(user_email: EmailStr):
     url = url_base + "/users/blocked/" + user_email
     response = requests.post(url=url)
@@ -53,7 +53,7 @@ def block_user(user_email: EmailStr):
                         detail=response.json()['detail'])
 
 
-@router.get("/users/unblocked/{user_email}", status_code=status.HTTP_200_OK)
+@router.post("/unblocked/{user_email}", status_code=status.HTTP_200_OK)
 def unblock_user(user_email: EmailStr):
     url = url_base + "/users/unblocked/" + user_email
     response = requests.post(url=url)
