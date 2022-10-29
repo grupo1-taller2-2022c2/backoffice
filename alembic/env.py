@@ -6,7 +6,7 @@ from sqlalchemy import pool
 from alembic import context
 
 # NO BORRAR ESTA LINEA por mas que los imports no se usen!
-from app.models import Base, admin_models
+from app.models import Base, admin_models, metric_models
 from app.database import get_database_url
 
 # this is the Alembic Config object, which provides
