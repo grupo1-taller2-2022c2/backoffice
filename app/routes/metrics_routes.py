@@ -17,13 +17,20 @@ def check_correct_method(method):
 
 # ------------Endpoints for Users microservice (to update counters))-----------------
 
-
 @router.post("/registrations", status_code=status.HTTP_200_OK)
 def add_one_to_registration_count(method: str = Query(default="mailpassword", description="Should be mailpassword or federatedidentity"),
                                   db: SessionLocal = Depends(get_db)):
     check_correct_method(method)
 
     return metrics_cruds.add_registration(method, db)
+
+
+@router.post("/logins", status_code=status.HTTP_200_OK)
+def add_one_to_login_count(method: str = Query(default="mailpassword", description="Should be mailpassword or federatedidentity"),
+                           db: SessionLocal = Depends(get_db)):
+    check_correct_method(method)
+
+    return metrics_cruds.add_login(method, db)
 
 
 # ------------Endpoints for frontend (to display metrics)-----------------
@@ -35,3 +42,11 @@ def get_registrations_count(method: str = Query(default="mailpassword", descript
     check_correct_method(method)
 
     return metrics_cruds.count_registrations(method, from_date, db)
+
+
+@router.get("/logins", status_code=status.HTTP_200_OK)
+def get_logins_count(method: str = Query(default="mailpassword", description="Should be mailpassword or federatedidentity"),
+                     from_date: datetime.date = datetime.date.today(),  db: SessionLocal = Depends(get_db)):
+    check_correct_method(method)
+
+    return metrics_cruds.count_logins(method, from_date, db)
