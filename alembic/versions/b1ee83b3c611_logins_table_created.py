@@ -18,6 +18,7 @@ branch_labels = None
 depends_on = None
 
 today = datetime.today()
+yesterday = today - timedelta(days=1)
 one_week_ago = today - timedelta(days=7)
 one_month_ago = today - timedelta(days=30)
 three_months_ago = today - timedelta(days=90)
@@ -36,9 +37,9 @@ def upgrade() -> None:
     op.bulk_insert(Login.__table__,
                    [
                        {'method': 'federatedidentity',
-                           'login_date': today},
+                           'login_date': yesterday},
                        {'method': 'mailpassword',
-                           'login_date': today},
+                           'login_date': yesterday},
                        {'method': 'mailpassword', 'login_date': one_week_ago},
                        {'method': 'mailpassword',
                            'login_date': one_week_ago},
