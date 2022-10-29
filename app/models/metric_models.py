@@ -21,10 +21,10 @@ class Registration(Base):
 class FederatedIdRegistrationCounter(Counter):
     def count(session, date_from):
         print(date_from)
-        return session.query(Registration).filter_by(method='federatedidentity').count()
+        return session.query(Registration).filter(Registration.method.like('federatedidentity'), Registration.date_registered >= date_from).count()
 
 
 class MailPasswordRegistrationCounter(Counter):
     def count(session, date_from):
         print(date_from)
-        return session.query(Registration).filter_by(method='mailpassword').count()
+        return session.query(Registration).filter(Registration.method.like('mailpassword'), Registration.date_registered >= date_from).count()
