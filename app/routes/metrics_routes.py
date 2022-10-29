@@ -2,6 +2,7 @@ import datetime
 import os
 from fastapi import APIRouter, Depends, HTTPException, status, Query
 from starlette import status
+import requests
 from app.database import SessionLocal, get_db
 from app.cruds import metrics_cruds
 
@@ -50,3 +51,13 @@ def get_logins_count(method: str = Query(default="mailpassword", description="Sh
     check_correct_method(method)
 
     return metrics_cruds.count_logins(method, from_date, db)
+
+
+@router.get("/blocked_users", status_code=status.HTTP_200_OK)
+def get_current_blocked_users_count():
+    url = url_base + "/users/blocked"
+    response = requests.get(url=url)
+    if response.ok:
+        return response.json()
+    raise HTTPException(status_code=response.status_code,
+                        detail=response.json()['detail'])
