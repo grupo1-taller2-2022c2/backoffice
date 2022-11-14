@@ -21,3 +21,7 @@ class DriverSelfProfile(BaseModel):
     ratings: float
     licence_plate: str
     model: str
+
+
+class DepositFundsSchema(BaseModel):
+    amount_in_ethers: str
