@@ -1,0 +1,37 @@
+version: "3.3"
+services:
+
+  backoffice_backend:
+    build: .
+    container_name: backoffice_container
+    stdin_open: true 
+    tty: true
+    links:
+      - backoffice_dev_db
+    environment:
+      - PORT=3000
+      - DATABASE_URL=postgresql://postgres:grupo1@backoffice_db_container:5432/postgres
+      - POSTGRES_PASSWORD=grupo1
+      - LOG_LEVEL=debug
+      - USERS_BASE_URL=http://fake_users:3000
+      - WALLETS_BASE_URL=http://fake_wallets:3000
+    depends_on:
+      - backoffice_dev_db
+    networks:
+      - my_network
+
+  backoffice_dev_db:
+    image: postgres
+    container_name: backoffice_db_container
+    environment:
+      - POSTGRES_PASSWORD=grupo1
+    expose:
+      - 5432
+    ports:
+      - 6543:5432
+    networks:
+      - my_network
+
+networks:
+  my_network:
+    driver: bridge
